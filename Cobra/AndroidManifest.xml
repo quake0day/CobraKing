@@ -21,5 +21,7 @@
             </intent-filter>
         </activity>
     </application>
-
+	<uses-permission android:name="android.permission.CAMERA" />
+	<user-feature android:name="android.hardware.camera" />
+	<user-feature android:name="android.hardware.camera.autofocus" />
 </manifest>

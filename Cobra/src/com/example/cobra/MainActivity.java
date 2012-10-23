@@ -1,5 +1,7 @@
 package com.example.cobra;
 
+
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -7,7 +9,10 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PreviewCallback;
@@ -16,6 +21,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.Window;
+import android.widget.ImageView;
 
 
 @SuppressLint("NewApi")
@@ -193,13 +200,26 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
                 Log.i(TAG, "going into onPreviewFrame");
                 
                 // get data length
+                int width = mPreviewWidth;
+                int height = mPreviewHeight;
                 int YUVIMGLEN = data.length;
+              //  ImageView iv = (ImageView)findViewById(R.id.imageView1);
+              //  ByteArrayOutputStream out = new ByteArrayOutputStream();
+              //  YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, width, height, null);
+              //  yuvImage.compressToJpeg(new Rect(0, 0, width, height), 50, out);
+              //  byte[] imageBytes = out.toByteArray();
+              //  Bitmap image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+              //  iv.setImageBitmap(image);
+                
                 byte[] rgbBuf = new byte[3 * mPreviewWidth * mPreviewHeight];
                 decodeYUV420SP(rgbBuf,data,mPreviewWidth,mPreviewHeight);
                 //printHexString(rgbBuf);
                 //Bitmap bmp = BitmapFactory.decodeByteArray(rgbBuf, 0, rgbBuf.length);
                
                 Log.i(TAG+"RGB:::::", rgbBuf.length+"");
+                //Process(rgbBuf)
+        		Process process = new Process();
+        		process.initProcess(rgbBuf,mPreviewHeight,mPreviewWidth);
                 
                 
 
@@ -300,7 +320,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-
+        // FULL SCREEN
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         initSurfaceView();

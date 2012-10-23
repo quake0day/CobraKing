@@ -12,9 +12,9 @@
         tools:context=".MainActivity" />
     
     <SurfaceView
- android:id="@+id/surfaceview" 
-   android:layout_width="fill_parent"
-   android:layout_height="wrap_content"
+ android:id="@+id/Surfaceview" 
+          android:layout_width="640px"
+        android:layout_height="480px"   
    />
 
 </RelativeLayout>

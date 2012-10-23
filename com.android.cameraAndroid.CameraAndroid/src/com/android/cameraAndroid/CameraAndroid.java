@@ -63,8 +63,9 @@ public class CameraAndroid extends Activity {
 		preview = new CameraPreview(this,camera);
 		setContentView(R.layout.main);
 		//create new Intent
-		//Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		//Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+		
 		
 		fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
 		File sdcard = Environment.getExternalStoragePublicDirectory(
@@ -85,9 +86,7 @@ public class CameraAndroid extends Activity {
 				int color = bitmap.getPixel(k, 0);
 				Log.v("color:", ""+color);
 
-			}
-			
-			
+			}		
 			rev.add(bitmap);
 			
 			}

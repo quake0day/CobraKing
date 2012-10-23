@@ -1,7 +1,9 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 
 
 import javax.imageio.ImageIO;
@@ -37,17 +39,17 @@ public class Process {
 	
 	
 	FileWriter mFWriter = null;
-	int mFrameIndex = 90;	//index in terms of captured frames
-	int mFrameIndexEnd = 317;
+	int mFrameIndex = 5;	//index in terms of captured frames
+	int mFrameIndexEnd = 6;
 	int mLogFileIndex = 0;	//index in terms of extracted code
 	int curDOB = 0;
 
 	
 	//read bmps
-	private String folderPath = "C:/Users/Tian/Desktop/pics/";
+	private String folderPath = "/Users/quake0day/bar/";
 	
 	//save extracted info
-	private String logFolderPath = "C:/Users/Tian/Desktop/results/";
+	private String logFolderPath = "/Users/quake0day/bar/";
 	
 	
 	int imgIndex = 0;
@@ -65,6 +67,7 @@ public class Process {
 		
 		//Create file for the source  
 		File input = new File(folderPath+imgName);  
+		System.out.println(folderPath+imgName);
 		  
 		//Read the file to a BufferedImage  
 		try {
@@ -140,7 +143,7 @@ public class Process {
    	
 	    	//********************************************/
 	    		
-	    	//save2File(dob);
+	    	//save2File(curDOB);
 	    	
     		mFrameIndex++;    	
     	}//END While
@@ -1990,6 +1993,12 @@ public class Process {
 			return false;
 		
 		mImageOrig.getRGB(0, 0, bmpWidth, bmpHeight, pixels, 0, bmpWidth);
+		System.out.println(index+"");
+		for(int   i=0;i <1000;i++){ 
+			System.out.print("i"+i);
+			System.out.println(pixels[i]); 
+		}
+		  
 		
 		System.out.println("ReadBmp: " + Integer.toString(index));
 		return true;

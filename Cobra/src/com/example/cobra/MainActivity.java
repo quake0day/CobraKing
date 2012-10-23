@@ -220,6 +220,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
                 //Process(rgbBuf)
         		Process process = new Process();
         		process.initProcess(rgbBuf,mPreviewHeight,mPreviewWidth);
+        		process.processImage(5);
                 
                 
 

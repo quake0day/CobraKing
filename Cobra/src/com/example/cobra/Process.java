@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Scanner;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
 
@@ -86,6 +87,8 @@ public class Process {
     private boolean loadPixels(int index)
     {
     	String imgName = Integer.toString(index)+".bmp" ;
+    	String filePath = Environment.getExternalStorageDirectory() + 
+    			"/Pictures/testPhoto/"+imgName;
 		
 		//Create file for the source  
 		//File input = new File(folderPath+imgName);
@@ -105,7 +108,7 @@ public class Process {
 		
 		System.out.println("ReadBmp: " + Integer.toString(index));
 		*/
-    	Bitmap bitmap = BitmapFactory.decodeFile(imgName);
+    	Bitmap bitmap = getDiskBitmap(filePath);
     	int picw = bitmap.getWidth();
     	int pich = bitmap.getHeight();
         int[] pix = new int[picw * pich];
@@ -124,7 +127,11 @@ public class Process {
             //R,G.B - Red, Green, Blue
              //to restore the values after RGB modification, use 
 //next statement
-            pix[index] = 0xff000000 | (R << 16) | (G << 8) | B;
+            pix[index_pix] = 0xff000000 | (R << 16) | (G << 8) | B;
+            if(index_pix < 1000){
+            Log.i(TAG+"index:"," "+index_pix);
+            Log.i(TAG+"Value:;",""+pix[index_pix]);
+            }
             }}
         
         
@@ -132,6 +139,24 @@ public class Process {
     }
     
 
+	private Bitmap getDiskBitmap(String pathString)
+	{
+		Bitmap bitmap = null;
+		try
+		{
+			File file = new File(pathString);
+			if(file.exists())
+			{
+				bitmap = BitmapFactory.decodeFile(pathString);
+			}
+		} catch (Exception e)
+		{
+			// TODO: handle exception
+		}
+		
+		
+		return bitmap;
+	}
 	
     /**
      * color enhancement based on HSV model, returns DOB

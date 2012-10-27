@@ -39,17 +39,17 @@ public class Process {
 	
 	
 	FileWriter mFWriter = null;
-	int mFrameIndex = 5;	//index in terms of captured frames
-	int mFrameIndexEnd = 6;
+	int mFrameIndex = 0;	//index in terms of captured frames
+	int mFrameIndexEnd = 345;
 	int mLogFileIndex = 0;	//index in terms of extracted code
 	int curDOB = 0;
 
 	
 	//read bmps
-	private String folderPath = "/Users/quake0day/bar/";
+	private String folderPath = "/Users/quake0day/Readout/";
 	
 	//save extracted info
-	private String logFolderPath = "/Users/quake0day/bar/";
+	private String logFolderPath = "/Users/quake0day/Readout/log/";
 	
 	
 	int imgIndex = 0;
@@ -63,7 +63,7 @@ public class Process {
 	
 	public void initProcess()
 	{
-		String imgName = Integer.toString(0)+".bmp" ;
+		String imgName = Integer.toString(107)+".bmp" ;
 		
 		//Create file for the source  
 		File input = new File(folderPath+imgName);  
@@ -1993,11 +1993,10 @@ public class Process {
 			return false;
 		
 		mImageOrig.getRGB(0, 0, bmpWidth, bmpHeight, pixels, 0, bmpWidth);
-		System.out.println(index+"");
-		for(int   i=0;i <1000;i++){ 
+		/*r(int   i=0;i <1000;i++){ 
 			System.out.print("i"+i);
 			System.out.println(pixels[i]); 
-		}
+		}*/
 		  
 		
 		System.out.println("ReadBmp: " + Integer.toString(index));

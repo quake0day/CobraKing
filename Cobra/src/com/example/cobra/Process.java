@@ -43,10 +43,12 @@ public class Process {
 	private int numTimingHeight = 100;
 	
 	//read bmps
-	private String folderPath = "/Users/quake0day/bar/";
+	private String folderPath = Environment.getExternalStorageDirectory() + 
+			"/Pictures/bar/";
 	
 	//save extracted info
-	private String logFolderPath = "/Users/quake0day/bar/";
+	private String logFolderPath = Environment.getExternalStorageDirectory() + 
+			"/Pictures/";
 	
 	Process()
 	{
@@ -818,7 +820,41 @@ public class Process {
 		return true;
     }//END FUNCTION
 
-    
+	 /**
+     * read bitmaps in folder (bmpFolderPath) one by one
+     */
+    public void readBmps()
+    {
+    	
+    	int codeSerial = 0;
+    	
+    	//mFrameIndex = 180;
+    	  	
+    	boolean bContinue = true;
+    	
+    	while(mFrameIndex<=mFrameIndexEnd)
+    	{	
+    		if(!loadPixels(mFrameIndex))
+    			break;
+    		
+    		System.out.println("Processing bmp #" + Integer.toString(mFrameIndex)+"--------------------------");
+    		
+	    	//********************************************/
+	    	//**************PROCESS IMAGE*****************/
+	    	long startTimeNano = System.nanoTime();
+	    	
+	    	curDOB = polarizeImageHSV(pixels);      	
+	    	
+    		EXTRACT_CODE();	    
+   	
+	    	//********************************************/
+	    		
+	    	//save2File(curDOB);
+	    	
+    		mFrameIndex++;    	
+    	}//END While
+    	
+    }
     /**
      * convert color to byte
      * when decode color code

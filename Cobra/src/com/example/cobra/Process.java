@@ -35,8 +35,8 @@ public class Process {
 	boolean cornerDetected = false;	//indicate if use corner estimate
 	
 	FileWriter mFWriter = null;
-	int mFrameIndex = 5;	//index in terms of captured frames
-	int mFrameIndexEnd = 6;
+	int mFrameIndex = 287;	//index in terms of captured frames
+	int mFrameIndexEnd = 287;
 	int mLogFileIndex = 0;	//index in terms of extracted code
 	
 	private int numTimingWidth = 100;
@@ -44,7 +44,7 @@ public class Process {
 	
 	//read bmps
 	private String folderPath = Environment.getExternalStorageDirectory() + 
-			"/Pictures/bar/";
+			"/Pictures/bar/new/";
 	
 	//save extracted info
 	private String logFolderPath = Environment.getExternalStorageDirectory() + 
@@ -81,9 +81,20 @@ public class Process {
 		pixels = new int [bmpHeight*bmpWidth];
 		pRect = new Point[4];
 		for(int i=0; i<4; i++)
-			pRect[i] = new Point(0,0);			
+			pRect[i] = new Point(0,0);
+		processImage(287);
 	}
-	
+	public boolean processRealTime()
+	{
+		curDOB = polarizeImageHSV(pixels);
+		Log.i(TAG,"DOB:" + Integer.toString(curDOB));
+		
+		EXTRACT_CODE();
+		
+		return true;
+		
+		
+	}
 	public boolean processImage(int index)
 	{	
 		
@@ -95,8 +106,8 @@ public class Process {
     	//**************PROCESS IMAGE*****************/
     	long startTimeNano = System.nanoTime();
     	
-		curDOB = polarizeImageHSV(pixels);      	
-		System.out.println("DOB: " + Integer.toString(curDOB));
+		curDOB = polarizeImageHSV(pixels);      
+		Log.i(TAG, "DOB: " + Integer.toString(curDOB));
     	
 		EXTRACT_CODE();	    
 	
@@ -111,12 +122,12 @@ public class Process {
 	
     private boolean EXTRACT_CODE()
     {   
-    	
+    	Log.i(TAG, "I'm in extract_CODE");
     	if(cornerDetected)
     		cornerEstimate(pixels, pRect);
     	else
     		cornerDetectData(pixels, pRect);
- 	
+    	
     	if(!extractCode(pixels, bmpWidth, bmpHeight, pRect))
     		cornerDetected = false;
     	
@@ -756,19 +767,20 @@ public class Process {
 		tmp = mSerial_3;
 		if(tmp<0)
 			tmp+=256;
-		reverseLong = (reverseLong|tmp);		
+		reverseLong = (reverseLong|tmp);
+		Log.i(TAG,"serial #" + Long.toString(reverseLong));
 		System.out.println("serial #" + Long.toString(reverseLong));	//#####################
 		
 		
 		//*******************************************************
 		//---------------Log frame encoding into txt-----------
-		if(true)
+		if(false)//true for sure:)
 		{
 			//initialize writer and string
 			try
 	        {
 				mLogFileIndex++;
-	        	mFWriter = new FileWriter(logFolderPath + Long.toString(mLogFileIndex)+".txt");	
+	        	mFWriter = new FileWriter(logFolderPath + "/bar/new/"+ Long.toString(mLogFileIndex)+".txt");	
 			}
 	        catch(Exception e)
 	        {
@@ -778,6 +790,7 @@ public class Process {
 			try
 	    	{
 				//Frame Index
+				Log.i(TAG+" mFrameIndex", Integer.toString( mFrameIndex ));
 				mFWriter.write(Integer.toString( mFrameIndex ));
 	    		mFWriter.write('\n');
 	    		//serial num
@@ -1001,8 +1014,8 @@ public class Process {
     {
     	String imgName = Integer.toString(index)+".bmp" ;
     	String filePath = Environment.getExternalStorageDirectory() + 
-    			"/Pictures/testPhoto/"+imgName;
-		
+    			"/Pictures/bar/new/"+imgName;
+    	Log.e(TAG, "I'm in loadPixels:"+filePath);
 		//Create file for the source  
 		//File input = new File(folderPath+imgName);
 		/*
@@ -1024,8 +1037,9 @@ public class Process {
     	Bitmap bitmap = getDiskBitmap(filePath);
     	int picw = bitmap.getWidth();
     	int pich = bitmap.getHeight();
-        int[] pix = new int[picw * pich];
-        bitmap.getPixels(pix, 0, picw, 0, 0, picw, pich);
+    	Log.i(TAG, "picw:"+picw+"pich"+pich);
+       //int[] pixels = new int[picw * pich];
+        bitmap.getPixels(pixels, 0, picw, 0, 0, picw, pich);
 
         int R, G, B,Y;
 
@@ -1041,14 +1055,14 @@ public class Process {
              //to restore the values after RGB modification, use 
 //next statement
             pixels[index_pix] = 0xff000000 | (R << 16) | (G << 8) | B;
-            /* for test only
-            if(index_pix < 1000){
+             //for test only
+            if(index_pix < 10){
             Log.i(TAG+"index:"," "+index_pix);
             Log.i(TAG+"Value:;",""+pixels[index_pix]);
             }
-            */
+            
             }
-        System.out.println("ReadBmp: " + Integer.toString(index));
+       // System.out.println("ReadBmp: " + Integer.toString(index));
         }
         
         
@@ -1083,6 +1097,7 @@ public class Process {
      */
     private void cornerEstimate(int[] buf, Point[] rect)
     {
+    	Log.i(TAG, "I'm in cornerEstimate");
     	int range = 25;
     	int startX = 0;
     	int startY = 0;
@@ -1217,6 +1232,7 @@ public class Process {
      */
     private boolean cornerDetectData(int[] buf, Point[] rect)
     {
+    	Log.i(TAG, "I'm in cornerDetectData");
     	int minBlockWid = 5;
     	boolean markCorner = false;
     	
@@ -1389,7 +1405,7 @@ public class Process {
     	cornerDetected = true;
     	
     	estimateVoteRange(cntRed+cntGreen+cntBlue+cntBlueTR);
-    	
+    	Log.i(TAG, "I'm in cornerDetectData END");
     	return true;  
     }
     

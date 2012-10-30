@@ -52,6 +52,9 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
             
             mCamera.setPreviewDisplay(mSurfaceHolder);// set the surface to be
                                                         // used for live preview
+            
+ 
+    		
 
         } catch (Exception ex) {
             if (null != mCamera) {
@@ -69,7 +72,9 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         Log.i(TAG, "SurfaceHolder.Callback：Surface Changed");
         // mPreviewHeight = height;
         // mPreviewWidth = width;
+
         initCamera();
+        
     }
 
     public void surfaceDestroyed(SurfaceHolder holder)
@@ -196,6 +201,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         public void onPreviewFrame(byte[] data, Camera camera) {
             // 传递进来的data,默认是YUV420SP的
             // TODO Auto-generated method stub
+
             try {
                 Log.i(TAG, "going into onPreviewFrame");
                 
@@ -205,22 +211,21 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
                 int YUVIMGLEN = data.length;
               //  ImageView iv = (ImageView)findViewById(R.id.imageView1);
               //  ByteArrayOutputStream out = new ByteArrayOutputStream();
-              //  YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, width, height, null);
+             ///   YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, width, height, null);
               //  yuvImage.compressToJpeg(new Rect(0, 0, width, height), 50, out);
               //  byte[] imageBytes = out.toByteArray();
               //  Bitmap image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
               //  iv.setImageBitmap(image);
                 
-                byte[] rgbBuf = new byte[3 * mPreviewWidth * mPreviewHeight];
-                decodeYUV420SP(rgbBuf,data,mPreviewWidth,mPreviewHeight);
+              //S  byte[] rgbBuf = new byte[3 * mPreviewWidth * mPreviewHeight];
+              //  decodeYUV420SP(rgbBuf,data,mPreviewWidth,mPreviewHeight);
                 //printHexString(rgbBuf);
-                //Bitmap bmp = BitmapFactory.decodeByteArray(rgbBuf, 0, rgbBuf.length);
+              //  Bitmap bmp = BitmapFactory.decodeByteArray(rgbBuf, 0, rgbBuf.length);
                
-                Log.i(TAG+"RGB:::::", rgbBuf.length+"");
+             //   Log.i(TAG+"RGB:::::", rgbBuf.length+"");
                 //Process(rgbBuf)
-        		Process process = new Process();
-        		process.initProcess(rgbBuf,mPreviewHeight,mPreviewWidth);
-        		process.processImage(5);
+
+        		//process.readBmps();
                 
                 
 
@@ -242,20 +247,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         }// endonPriview
 
     };
-    
-    // print byte[] for test only
-    public static void printHexString( byte[] b) { 
-    	for (int i = 0; i < b.length; i++) { 
-    	String hex = Integer.toHexString(b[i] & 0xFF); 
-    	if (hex.length() == 1) { 
-    	hex = '0' + hex; 
-    	} 
-    	Log.i("HEX::",hex.toUpperCase());
-    	//System.out.print(hex.toUpperCase() ); 
-    	} 
-
-    	} 
-
     
     // Change YUV420SP to RGB
     static public void decodeYUV420SP(byte[] rgbBuf, byte[] yuv420sp, int width, int height) {
@@ -326,12 +317,29 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         setContentView(R.layout.activity_main);
 
         initSurfaceView();
+        byte[] rgbBuf = new byte[3 * mPreviewWidth * mPreviewHeight];
+ 		Process process = new Process();
+ 		process.initProcess(rgbBuf,mPreviewHeight,mPreviewWidth);
     }
     
     
  // 定义对象
     private SurfaceView mSurfaceview = null;  // SurfaceView对象：(视图组件)视频显示 
-    private SurfaceHolder mSurfaceHolder = null;  // SurfaceHolder对象：(抽象接口)SurfaceView支持类 
+    // print byte[] for test only
+	public static void printHexString( byte[] b) { 
+		for (int i = 0; i < b.length; i++) { 
+		String hex = Integer.toHexString(b[i] & 0xFF); 
+		if (hex.length() == 1) { 
+		hex = '0' + hex; 
+		} 
+		Log.i("HEX::",hex.toUpperCase());
+		//System.out.print(hex.toUpperCase() ); 
+		} 
+	
+		}
+
+
+	private SurfaceHolder mSurfaceHolder = null;  // SurfaceHolder对象：(抽象接口)SurfaceView支持类 
     private Camera mCamera =null;     // Camera对象，相机预览
     
     public static String TAG = "cn";

@@ -50,7 +50,8 @@ public class CanvasTx extends Activity
 	
 	private Bitmap[] bmpShowArr = null;
 	
-	
+	// Define single block that you wanna transmit
+	byte[] Single_block = {0x01,0x01,0x01,0x01};
 	
 	public EditText mEditText = null;
 	
@@ -117,7 +118,8 @@ public class CanvasTx extends Activity
         
     	private Sensor mAccelerometer;
         
-        
+    	private byte[] mBufArray = {0x41,0x42};	//bytes read from file to send
+    	
         int[] mAccList = null;
         int curAccIndex = 0;
         int accListLen = 10;
@@ -193,7 +195,7 @@ public class CanvasTx extends Activity
     	
     	private byte[][] mDataArray = null;
     	private byte[] mCodeArray = null;	//colors of code to display on screen
-    	private byte[] mBufArray = null;	//bytes read from file to send
+    	
     	private byte[] mByte2ColorArr = null;	//bytes read from file to send
     	int bufLen = 0;
     	long mSerial = 0; //start from 1, 0 indicate the last frame
@@ -1102,7 +1104,7 @@ public class CanvasTx extends Activity
     			if(!bFileOpened)
     			{
     				inFile = new File(Environment.getExternalStorageDirectory()+"/Pictures", mTargetFile);
-    				    				
+    					
     				try {
     					inStream = new BufferedInputStream(new FileInputStream(inFile));
     				} catch (FileNotFoundException e) {
@@ -1276,15 +1278,12 @@ public class CanvasTx extends Activity
     					runCnt++;
     					int len = 0;
     					
-    					//------------read file to buffer------------
-    					try {
-    						len = inStream.read(mBufArray, 0, bufLen);
-    						//Log.e("#inStream:", Integer.toString(len));
+    					//len = inStream.read(mBufArray, 0, bufLen);
+    					System.arraycopy(Single_block,0,mBufArray,0,4);
+        	
 
-    					} catch (IOException e) {
-    						// TODO Auto-generated catch block
-    						e.printStackTrace();
-    					}
+						len = mBufArray.length;
+						Log.e("#inStream:", Integer.toString(len));
     					
     					//------------send if still content left------------
     					if(len>0)
@@ -1380,7 +1379,8 @@ public class CanvasTx extends Activity
     						//------------encode data in buf to color code------------
     						for(int i=0; i<len; i++)
     						{
-    							b = mBufArray[i];						
+    							b = mBufArray[i];	
+    							Log.e("bit::", Byte.toString(b));
     							
     							//-------------encode use 4 colors----------------
     							if(fourColor)

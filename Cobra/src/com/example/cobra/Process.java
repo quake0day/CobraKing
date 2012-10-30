@@ -55,7 +55,7 @@ public class Process {
 		System.out.println("Hello World!"); // Display the string
 	}
 	
-	public void initProcess(byte[] RGB,int mPreviewHeight,int mPreviewWidth)
+	public void initProcess(int[] RGB,int mPreviewHeight,int mPreviewWidth)
 	{
 		Log.i(TAG, "HELLO I'm in process");
 		/*
@@ -82,10 +82,13 @@ public class Process {
 		pRect = new Point[4];
 		for(int i=0; i<4; i++)
 			pRect[i] = new Point(0,0);
-		processImage(287);
+		//processImage(287);
+		pixels = RGB;
+		processRealTime();
 	}
 	public boolean processRealTime()
 	{
+		long startTimeNano = System.nanoTime();
 		curDOB = polarizeImageHSV(pixels);
 		Log.i(TAG,"DOB:" + Integer.toString(curDOB));
 		

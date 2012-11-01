@@ -13,12 +13,22 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:process=":com.example.cobra.process" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        
+        <activity android:name=".CanvasTx"
+            	  android:label="@string/title_activity_main"
+            	  android:process=":com.example.cobra.canvastx">
+            	  <intent-filter>
+            	      <action android:name="com.example.cobra.canvastx"/>
+            	      <category android:name="android.intent.category.DEFAULT"/>
+            	  </intent-filter>
         </activity>
     </application>
 	<uses-permission android:name="android.permission.CAMERA" />

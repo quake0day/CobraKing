@@ -21,8 +21,8 @@ public class JavaParse
 		process.initProcess();
 		
 		
-		//process.processImage(5);	
-		process.readBmps();
+		process.processImage(287);	
+		//process.readBmps();
 		
 		Toolkit.getDefaultToolkit().beep();  
 			

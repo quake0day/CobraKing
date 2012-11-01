@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,12 +22,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
 @SuppressLint("NewApi")
-public class MainActivity extends Activity implements SurfaceHolder.Callback{
+public class MainActivity extends Activity implements SurfaceHolder.Callback,OnClickListener{
 
     /* 【SurfaceHolder.Callback 回调函数】 */
     public void surfaceCreated(SurfaceHolder holder)
@@ -52,10 +56,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
             
             mCamera.setPreviewDisplay(mSurfaceHolder);// set the surface to be
                                                         // used for live preview
-            
- 
-    		
-
         } catch (Exception ex) {
             if (null != mCamera) {
                 mCamera.release();
@@ -284,56 +284,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
     	}
     }
 
-        
-        /*
-    // Change YUV420SP to RGB
-    static public void decodeYUV420SP(byte[] rgbBuf, byte[] yuv420sp, int width, int height) {
-    	final int frameSize = width * height;
-		if (rgbBuf == null)
-			throw new NullPointerException("buffer 'rgbBuf' is null");
-		if (rgbBuf.length < frameSize * 3)
-			throw new IllegalArgumentException("buffer 'rgbBuf' size "
-					+ rgbBuf.length + " < minimum " + frameSize * 3);
-
-		if (yuv420sp == null)
-			throw new NullPointerException("buffer 'yuv420sp' is null");
-
-		if (yuv420sp.length < frameSize * 3 / 2)
-			throw new IllegalArgumentException("buffer 'yuv420sp' size " + yuv420sp.length
-					+ " < minimum " + frameSize * 3 / 2);
-    	
-    	int i = 0, y = 0;
-    	int uvp = 0, u = 0, v = 0;
-    	int y1192 = 0, r = 0, g = 0, b = 0;
-    	
-    	for (int j = 0, yp = 0; j < height; j++) {
-    		uvp = frameSize + (j >> 1) * width;
-    		u = 0;
-    		v = 0;
-    		for (i = 0; i < width; i++, yp++) {
-    			y = (0xff & ((int) yuv420sp[yp])) - 16;
-    			if (y < 0) y = 0;
-    			if ((i & 1) == 0) {
-    				v = (0xff & yuv420sp[uvp++]) - 128;
-    				u = (0xff & yuv420sp[uvp++]) - 128;
-    			}
-    			
-    			y1192 = 1192 * y;
-    			r = (y1192 + 1634 * v);
-    			g = (y1192 - 833 * v - 400 * u);
-    			b = (y1192 + 2066 * u);
-    			
-    			if (r < 0) r = 0; else if (r > 262143) r = 262143;
-    			if (g < 0) g = 0; else if (g > 262143) g = 262143;
-    			if (b < 0) b = 0; else if (b > 262143) b = 262143;
-    			//pixels[index_pix] = 0xff000000 | (R << 16) | (G << 8) | B;
-    			rgbBuf[yp * 3] = (byte)(r >> 10);
-    			rgbBuf[yp * 3 + 1] = (byte)(g >> 10);
-    			rgbBuf[yp * 3 + 2] = (byte)(b >> 10);
-    		}
-    	}
-    }
-    */
+ 
     
  // InitSurfaceView
     private void initSurfaceView() {
@@ -355,9 +306,21 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         setContentView(R.layout.activity_main);
 
         initSurfaceView();
+       
+        startButton = (Button)findViewById(R.id.button1);
+        startButton.setOnClickListener(this);
+        
+        
       //  byte[] rgbBuf = new byte[3 * mPreviewWidth * mPreviewHeight];
  	//	Process process = new Process();
  	//	process.initProcess(rgbBuf,mPreviewHeight,mPreviewWidth);
+    }
+    
+    public void onClick(View v){
+    	if(v.equals(startButton)){
+    		Intent intent = new Intent("com.example.cobra.canvastx");
+    		startActivity(intent);
+    	}
     }
     
     
@@ -379,7 +342,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 
 	private SurfaceHolder mSurfaceHolder = null;  // SurfaceHolder对象：(抽象接口)SurfaceView支持类 
     private Camera mCamera =null;     // Camera对象，相机预览
-    
+    private Button startButton = null;
     public static String TAG = "cn";
     boolean bIfPreview = false;
     int mPreviewHeight = 480;

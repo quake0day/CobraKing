@@ -49,9 +49,10 @@ public class CanvasTx extends Activity
 	private SurView mSurView;
 	
 	private Bitmap[] bmpShowArr = null;
+	private int CODE_SIZE = 1;
 	
 	// Define single block that you wanna transmit
-	byte[] Single_block = {0x01,0x01,0x01,0x01};
+	byte[] Single_block = {(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99};
 	
 	public EditText mEditText = null;
 	
@@ -118,7 +119,7 @@ public class CanvasTx extends Activity
         
     	private Sensor mAccelerometer;
         
-    	private byte[] mBufArray = {0x41,0x42};	//bytes read from file to send
+    	private byte[] mBufArray =null;	//bytes read from file to send
     	
         int[] mAccList = null;
         int curAccIndex = 0;
@@ -1279,11 +1280,11 @@ public class CanvasTx extends Activity
     					int len = 0;
     					
     					//len = inStream.read(mBufArray, 0, bufLen);
-    					System.arraycopy(Single_block,0,mBufArray,0,4);
+    					System.arraycopy(Single_block,0,mBufArray,0,CODE_SIZE);
         	
 
 						len = mBufArray.length;
-						Log.e("#inStream:", Integer.toString(len));
+						Log.e("#mBufArray-length:", Integer.toString(len));
     					
     					//------------send if still content left------------
     					if(len>0)

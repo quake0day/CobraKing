@@ -773,6 +773,12 @@ public class Process {
 		reverseLong = (reverseLong|tmp);
 		Log.i(TAG,"serial #" + Long.toString(reverseLong));
 		System.out.println("serial #" + Long.toString(reverseLong));	//#####################
+		for (byte bClr : colorCodeBuf)
+		{				
+			System.out.print("CODE##:");
+			System.out.println(Byte.toString((bClr)));					      	  				    		
+		}
+		
 		
 		
 		//*******************************************************

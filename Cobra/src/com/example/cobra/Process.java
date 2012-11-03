@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
+
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -85,6 +87,8 @@ public class Process {
 		//processImage(287);
 		pixels = RGB;
 		processRealTime();
+		Intent intent = new Intent("com.example.cobra.canvastx");
+		intent.putExtra("activityMain", "hello");
 	}
 	public boolean processRealTime()
 	{
@@ -779,7 +783,19 @@ public class Process {
 			System.out.println(Byte.toString((bClr)));					      	  				    		
 		}
 		
-		
+    	//------------extract CODE #-------------
+		while (curPos < colorCodeBuf.length){
+    	for(int n=0; n<4; n++)
+		{
+    		colorArr[n] = colorCodeBuf[curPos];
+    		//Log.e("1-b", Byte.toString(colorCodeBuf[curPos]));	//#####################
+    		curPos++;
+		}
+    	byte extract_code = color2Byte(colorArr);
+		System.out.print("PAYLOAD##:");
+		System.out.println(Byte.toString((extract_code)));	
+		}
+    
 		
 		//*******************************************************
 		//---------------Log frame encoding into txt-----------

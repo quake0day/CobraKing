@@ -30,6 +30,14 @@
             	      <category android:name="android.intent.category.DEFAULT"/>
             	  </intent-filter>
         </activity>
+        
+        <service
+            	android:enabled="true"
+            	android:name="decodeService">
+            	<intent-filter>
+            	    <action android:name="com.example.cobra.decodeService.SERVICE" />
+            	</intent-filter>
+        </service>
     </application>
 	<uses-permission android:name="android.permission.CAMERA" />
 	<user-feature android:name="android.hardware.camera" />

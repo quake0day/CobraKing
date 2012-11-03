@@ -82,6 +82,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
     {
         // TODO Auto-generated method stub
         Log.i(TAG, "SurfaceHolder.Callback：Surface Destroyed");
+        /*
         if (null != mCamera) {
             mCamera.setPreviewCallback(null); // ！！这个必须在前，不然退出出错
             mCamera.stopPreview();
@@ -89,6 +90,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
             mCamera.release();
             mCamera = null;
         }
+        */
     }
      
     /* 【2】【相机预览】 */
@@ -229,6 +231,10 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
                  // pixels =  byte2int(rgbBuf);
                   Log.i(TAG+"RGB:::::", rgbBuf.length+"");
                   
+          		//Intent intent = new Intent("com.example.cobra.canvastx");
+        		//intent.putExtra("activityMain", "hello");
+        		//startActivity(intent);
+        		
                   //byte[] rgbBuf = new byte[3 * mPreviewWidth * mPreviewHeight];
                	  Process process = new Process();
                	  process.initProcess(rgbBuf,mPreviewHeight,mPreviewWidth);
@@ -319,6 +325,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
     public void onClick(View v){
     	if(v.equals(startButton)){
     		Intent intent = new Intent("com.example.cobra.canvastx");
+    		intent.putExtra("activityMain", "hello");
     		startActivity(intent);
     	}
     }

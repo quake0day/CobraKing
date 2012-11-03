@@ -49,10 +49,10 @@ public class CanvasTx extends Activity
 	private SurView mSurView;
 	
 	private Bitmap[] bmpShowArr = null;
-	private int CODE_SIZE = 1;
+	private int CODE_SIZE = 10;
 	
 	// Define single block that you wanna transmit
-	byte[] Single_block = {(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99,(byte) 0x99};
+	byte[] Single_block = {(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15 };
 	
 	public EditText mEditText = null;
 	
@@ -61,7 +61,7 @@ public class CanvasTx extends Activity
 	int iBmp = 1;
 	int jBmp = 1;
 	boolean isShowBmps = false;
-	
+	String data = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -88,7 +88,8 @@ public class CanvasTx extends Activity
    	   
         //PixNet
         dst = new RectF(0,0,480,800);
-    	
+        
+
     }
     
     @Override
@@ -793,6 +794,8 @@ public class CanvasTx extends Activity
     	
     	private void byte2FourColors(byte b, byte[] cArr)
     	{
+
+            
     		byte colorIndex = 1;
     		
     		//1st 2 bit

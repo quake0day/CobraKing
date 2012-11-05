@@ -5,9 +5,14 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
+
+import org.apache.http.util.EncodingUtils;
+
+import android.content.Intent;
 
 
 
@@ -42,6 +47,7 @@ import android.widget.EditText;
 
 public class CanvasTx extends Activity 
 {
+	
 	private PowerManager.WakeLock wl;
 	
 	private SensorManager mSensorManager;
@@ -53,7 +59,9 @@ public class CanvasTx extends Activity
 	
 	// Define single block that you wanna transmit
 	byte[] Single_block = {(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15 };
-	
+	byte[] Single_block_1 = {(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10 };
+	byte[] Single_block_2 = {(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11 };
+
 	public EditText mEditText = null;
 	
 	//Pixnet
@@ -62,11 +70,14 @@ public class CanvasTx extends Activity
 	int jBmp = 1;
 	boolean isShowBmps = false;
 	String data = null;
-	
+	private Glue glue;
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Window win = getWindow();
+        win.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         
      // Get an instance of the SensorManager
@@ -88,6 +99,21 @@ public class CanvasTx extends Activity
    	   
         //PixNet
         dst = new RectF(0,0,480,800);
+     // 设置全屏模式
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+           //WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+        // 去除标题栏
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+       
+		//String S;
+  		//Glue glue ;
+		//glue = (Glue) getApplication();
+		//S = glue.getSerial();
+		//Log.e("data",S);
+
+		
+
+
         
 
     }
@@ -95,7 +121,8 @@ public class CanvasTx extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-     
+        
+        
         mSurView.startSensor();
         
     }
@@ -108,6 +135,40 @@ public class CanvasTx extends Activity
     	mSurView.stopSensor();
     	
     	//wl.release();
+    }
+    
+    
+    public void writeFile(String fileName, String writestr) throws IOException{
+   	 try{
+   		 FileOutputStream fout = openFileOutput(fileName,MODE_PRIVATE);
+   		 
+   		 byte[] bytes = writestr.getBytes();
+   		 fout.write(bytes);
+   		 fout.close();
+   		 
+   	 }
+   	 catch(Exception e){
+   		 e.printStackTrace();
+   	 }
+    }
+      
+    public String readFile(String fileName) throws IOException{
+   	
+   	 String res = "";
+   	 try{
+   		 FileInputStream fin = openFileInput(fileName);
+   		 int length = fin.available();
+   		 byte [] buffer = new byte[length];
+   		 fin.read(buffer);
+   		 res = EncodingUtils.getString(buffer,"UTF-8");
+   		 fin.close();
+   	 }
+   	 catch(Exception e){
+   		 e.printStackTrace();
+   	 }
+   	 
+   	 return res;
+   	 
     }
     
 
@@ -1052,6 +1113,10 @@ public class CanvasTx extends Activity
     		
     	}//END FUNC-------------------------------------------------------------
     	
+    	
+    	public void change2NewContext(Byte[] context){
+    		_thread = new DrawThread(getHolder(), this);
+    	}
     	public void surfaceDestroyed(SurfaceHolder holder) 
     	{
     		// TODO Auto-generated method stub
@@ -1283,8 +1348,52 @@ public class CanvasTx extends Activity
     					int len = 0;
     					
     					//len = inStream.read(mBufArray, 0, bufLen);
-    					System.arraycopy(Single_block,0,mBufArray,0,CODE_SIZE);
-        	
+    					//System.arraycopy(Single_block,0,mBufArray,0,CODE_SIZE);
+    					
+    					
+    					/*
+    					Intent intent = getIntent();
+    					Bundle bundle = intent.getExtras();
+    					
+    					if(bundle.getString("data") != null)
+    					{
+    						String k = bundle.getString("data");
+    						Log.e("data",k);
+    					}
+    					*/
+    					
+    	          		//Glue glue;
+    	          		//String z;
+    	          		//glue = (Glue) getApplication();
+    	          		//glue.add();
+    	          		//z = glue.getK()+" ";
+    					//
+    					/*
+    					MainActivity main = null;
+    					main = (MainActivity) main;
+    					int k =  MainActivity.k;
+    					Log.e("data",k+"");
+    					*/
+    					
+
+    	          		  String a = null;
+    	          		  try {
+							a = readFile("k.txt");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+    	          		  Log.e("data1",a);
+    	          		  if(Integer.parseInt(a) % 3 == 0){
+    	          			System.arraycopy(Single_block,0,mBufArray,0,CODE_SIZE);
+    	          		  }
+    	          		  else if(Integer.parseInt(a) % 3 == 1){
+    	          			System.arraycopy(Single_block_1,0,mBufArray,0,CODE_SIZE);
+    	          		  }
+    	          		  else if(Integer.parseInt(a) % 3 == 2){
+    	          			System.arraycopy(Single_block_2,0,mBufArray,0,CODE_SIZE); 
+    	          		  }
+
 
 						len = mBufArray.length;
 						Log.e("#mBufArray-length:", Integer.toString(len));
@@ -1384,7 +1493,7 @@ public class CanvasTx extends Activity
     						for(int i=0; i<len; i++)
     						{
     							b = mBufArray[i];	
-    							Log.e("bit::", Byte.toString(b));
+    							//Log.e("bit::", Byte.toString(b));
     							
     							//-------------encode use 4 colors----------------
     							if(fourColor)

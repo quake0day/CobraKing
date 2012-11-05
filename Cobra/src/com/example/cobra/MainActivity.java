@@ -2,7 +2,13 @@ package com.example.cobra;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import java.util.List;
+
+import org.apache.http.util.EncodingUtils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,7 +37,9 @@ import android.widget.ImageView;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity implements SurfaceHolder.Callback,OnClickListener{
+	public static int k = 9;
 
+	
     /* 【SurfaceHolder.Callback 回调函数】 */
     public void surfaceCreated(SurfaceHolder holder)
     // SurfaceView启动时/初次实例化，预览界面被创建时，该方法被调用。
@@ -225,19 +233,44 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
                   int[] pixels = new int [bmpHeight*bmpWidth];
                   int one_pix;
                   int [] rgbBuf = new int[bmpHeight * bmpWidth];
+                  Process pro;
                   decodeYUV420SP(rgbBuf,data,mPreviewWidth,mPreviewHeight);
                 //printHexString(rgbBuf);
                  // Bitmap bmp = BitmapFactory.decodeByteArray(rgbBuf, 0, rgbBuf.length);
                  // pixels =  byte2int(rgbBuf);
                   Log.i(TAG+"RGB:::::", rgbBuf.length+"");
                   
-          		//Intent intent = new Intent("com.example.cobra.canvastx");
-        		//intent.putExtra("activityMain", "hello");
+
         		//startActivity(intent);
         		
                   //byte[] rgbBuf = new byte[3 * mPreviewWidth * mPreviewHeight];
+                  boolean process_Succ = false;
                	  Process process = new Process();
                	  process.initProcess(rgbBuf,mPreviewHeight,mPreviewWidth);
+
+
+          		  
+
+          		  
+
+        		  //sendBroadcast(intent); 
+        		  
+               	  process_Succ = process.processRealTime();
+               	 // process_Succ = process.processImage(287);
+               	  Log.e("succ",process_Succ+" ");
+               	  if(process_Succ == true){
+              		  Intent intent = new Intent("com.example.cobra.canvastx");
+              		  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              		  startActivity(intent);
+              		  k ++;
+              		  writeFile("k.txt",k+"");
+              		  String a;
+              		  a = readFile("k.txt");
+              		  Log.e("data1",a);
+               	  }
+
+               	  //pro = (Process) getApplication(); //获得自定义的应用程序MyApp 
+               	 // Log.i("GETserial",pro.getSerial());
                  //Log.i(TAG+"BitMAP:::::", bmp.toString()+"");
                 //Process(rgbBuf)
 
@@ -257,7 +290,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
                  * // 开启编码线程，如开启PEG编码方式线程 mSendThread1.start();
                  */
             } catch (Exception e) {
-                Log.v("System.out", e.toString());
+                Log.v("ERROR", e.toString());
             }// endtry
 
         }// endonPriview
@@ -290,8 +323,38 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
     	}
     }
 
- 
-    
+ public void writeFile(String fileName, String writestr) throws IOException{
+	 try{
+		 FileOutputStream fout = openFileOutput(fileName,MODE_PRIVATE);
+		 
+		 byte[] bytes = writestr.getBytes();
+		 fout.write(bytes);
+		 fout.close();
+		 
+	 }
+	 catch(Exception e){
+		 e.printStackTrace();
+	 }
+ }
+   
+ public String readFile(String fileName) throws IOException{
+	
+	 String res = "";
+	 try{
+		 FileInputStream fin = openFileInput(fileName);
+		 int length = fin.available();
+		 byte [] buffer = new byte[length];
+		 fin.read(buffer);
+		 res = EncodingUtils.getString(buffer,"UTF-8");
+		 fin.close();
+	 }
+	 catch(Exception e){
+		 e.printStackTrace();
+	 }
+	 
+	 return res;
+	 
+ }
  // InitSurfaceView
     private void initSurfaceView() {
         mSurfaceview = (SurfaceView) this.findViewById(R.id.Surfaceview);
@@ -316,6 +379,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
         startButton = (Button)findViewById(R.id.button1);
         startButton.setOnClickListener(this);
         
+
+        
         
       //  byte[] rgbBuf = new byte[3 * mPreviewWidth * mPreviewHeight];
  	//	Process process = new Process();
@@ -324,8 +389,12 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
     
     public void onClick(View v){
     	if(v.equals(startButton)){
+    		
+    		//intent.putExtra("data", "hello");
+    	   // 
+  		   // glue = (Glue) getApplication();
+  		   // glue.setSerial("5555");
     		Intent intent = new Intent("com.example.cobra.canvastx");
-    		intent.putExtra("activityMain", "hello");
     		startActivity(intent);
     	}
     }

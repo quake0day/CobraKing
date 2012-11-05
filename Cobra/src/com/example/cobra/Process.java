@@ -4,12 +4,16 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
+import java.io.FileInputStream;
 
+
+import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,7 +22,7 @@ import android.util.Log;
 
 
 
-public class Process {
+public class Process{
 	private int bmpHeight = 0;
 	private int bmpWidth = 0;
 	public static String TAG = "cn";
@@ -35,7 +39,7 @@ public class Process {
 	int curDOB = 0;
 	int mVoteRange = 1; //(2*voteRange+1)
 	boolean cornerDetected = false;	//indicate if use corner estimate
-	
+	boolean extractSucc = false;
 	FileWriter mFWriter = null;
 	int mFrameIndex = 287;	//index in terms of captured frames
 	int mFrameIndexEnd = 287;
@@ -52,6 +56,7 @@ public class Process {
 	private String logFolderPath = Environment.getExternalStorageDirectory() + 
 			"/Pictures/";
 	
+
 	Process()
 	{
 		System.out.println("Hello World!"); // Display the string
@@ -84,27 +89,26 @@ public class Process {
 		pRect = new Point[4];
 		for(int i=0; i<4; i++)
 			pRect[i] = new Point(0,0);
-		//processImage(287);
+		
 		pixels = RGB;
-		processRealTime();
-		Intent intent = new Intent("com.example.cobra.canvastx");
-		intent.putExtra("activityMain", "hello");
+		//processRealTime();
 	}
 	public boolean processRealTime()
 	{
+		boolean extractDone = false;
 		long startTimeNano = System.nanoTime();
 		curDOB = polarizeImageHSV(pixels);
 		Log.i(TAG,"DOB:" + Integer.toString(curDOB));
 		
-		EXTRACT_CODE();
+		extractDone = EXTRACT_CODE();
 		
-		return true;
+		return extractSucc;
 		
 		
 	}
 	public boolean processImage(int index)
 	{	
-		
+		boolean extractDone = false;
 		if(!loadPixels(index))
 			return false;
 		
@@ -118,11 +122,11 @@ public class Process {
     	
 		EXTRACT_CODE();	    
 	
-    	
+		return extractSucc;
 		/*
 		//System.out.println("W,H: " + Integer.toString(bmpWidth)+","+Integer.toString(bmpHeight));
 		*/
-		return true;
+		//return true;
 	
 	}
 	
@@ -137,7 +141,7 @@ public class Process {
     	
     	if(!extractCode(pixels, bmpWidth, bmpHeight, pRect))
     		cornerDetected = false;
-    	
+   
     	return true;
     }
     /**
@@ -776,6 +780,9 @@ public class Process {
 			tmp+=256;
 		reverseLong = (reverseLong|tmp);
 		Log.i(TAG,"serial #" + Long.toString(reverseLong));
+
+
+		//setSerial(Long.toString(reverseLong));
 		System.out.println("serial #" + Long.toString(reverseLong));	//#####################
 		for (byte bClr : colorCodeBuf)
 		{				
@@ -784,17 +791,27 @@ public class Process {
 		}
 		
     	//------------extract CODE #-------------
-		while (curPos < colorCodeBuf.length){
+		while (curPos < colorCodeBuf.length -1 ){
     	for(int n=0; n<4; n++)
 		{
     		colorArr[n] = colorCodeBuf[curPos];
     		//Log.e("1-b", Byte.toString(colorCodeBuf[curPos]));	//#####################
     		curPos++;
 		}
+
+
     	byte extract_code = color2Byte(colorArr);
-		System.out.print("PAYLOAD##:");
-		System.out.println(Byte.toString((extract_code)));	
+    	
+		Log.i("PAYLOAD",Byte.toString((extract_code)));
 		}
+		extractSucc = true;
+		/*
+		  writeFile("k.txt",k+"");
+		  String a;
+		  a = readFile("k.txt");
+		  Log.e("data1",a);
+		  */
+		
     
 		
 		//*******************************************************

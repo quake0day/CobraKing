@@ -17,7 +17,7 @@ Use eclipse, set up eclipse Android development environment (<http://developer.a
 ####Third Step: 
 **"File" -> "Import" -> "Git" -> "Project from Git" -> "URI" ->**
 
-![How to use](https://www.evernote.com/shard/s47/sh/b12d02af-a14b-46d4-bd4b-651bd1c735aa/0ff380839118a70188d31c6c0c5fe9ba/res/91040c64-70ba-41b6-ab15-c8e070930584/skitch.png?resizeSmall&width=832) 
+![How to use](http://quake0day.com/readme.jpeg) 
 
 **--> "Next" --> "Next" -->"Next" --> "Finish"**
 

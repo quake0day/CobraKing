@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/junfeiwa/Desktop/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/junfeiwa/Desktop/zxing-2.1/core/core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/junfeiwa/AppData/Local/Android/android-sdk/platforms/android-15/android.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Users/junfeiwa/AppData/Local/Android/android-sdk/docs/reference"/>
+		</attributes>
+		<accessrules>
+			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/junfeiwa/AppData/Local/Android/android-sdk/platforms/android-16/android.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Users/junfeiwa/AppData/Local/Android/android-sdk/docs/reference"/>
+		</attributes>
+		<accessrules>
+			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry kind="src" path="/com.google.zxing.client.android.CaptureActivity"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

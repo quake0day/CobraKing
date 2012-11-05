@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="hello_world">Please choose the mode you want:</string>
+    <string name="app_name">myFirstScanner</string>
+    <string name="menu_settings">Settings</string>
+    <string name="button_sender">encode a message as a sender</string>
+    <string name="button_receiver">receive the message as receiver(Under development)</string>
+    <string name="sender_start_transferring">Start</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="sender_input_message">Please specify the number of frames to be showed on the screen in each second</string>
+    <string name="title_activity_sender">SenderActivity</string>
+    <string name="title_activity_encoder">EncoderActivity</string>
+
+</resources>

@@ -7,8 +7,11 @@
     <string name="button_receiver">receive the message as receiver(Under development)</string>
     <string name="sender_start_transferring">Start</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="sender_input_message">Please specify the number of frames to be showed on the screen in each second</string>
+    <string name="spinner_version_14">version 14</string><string name="sender_input_message">Please specify the number of frames to be showed on the screen in each second</string>
     <string name="title_activity_sender">SenderActivity</string>
-    <string name="title_activity_encoder">EncoderActivity</string>
+    <string name="spinner_version_10">version 10</string><string name="spinner_version">Please choose version</string><string name="title_activity_encoder">EncoderActivity</string>
+    
+    
+    
 
 </resources>

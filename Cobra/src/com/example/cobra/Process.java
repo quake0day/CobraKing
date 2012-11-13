@@ -97,8 +97,14 @@ public class Process{
 	{
 		boolean extractDone = false;
 		long startTimeNano = System.nanoTime();
+		long T9 = System.nanoTime();
 		curDOB = polarizeImageHSV(pixels);
-		Log.i(TAG,"DOB:" + Integer.toString(curDOB));
+		long T10 = System.nanoTime();
+	    long dob_time = T9 -T10;
+	    Log.e("DOBT",Long.toString(dob_time));
+	    
+	    Log.i(TAG,"DOB:" + Integer.toString(curDOB));
+     	  //process_Succ = process.processImage(287);
 		
 		extractDone = EXTRACT_CODE();
 		
@@ -134,13 +140,28 @@ public class Process{
     private boolean EXTRACT_CODE()
     {   
     	Log.i(TAG, "I'm in extract_CODE");
-    	if(cornerDetected)
+		long T11 = System.nanoTime();
+		long T12=0;
+		long T13 = 0;
+
+    	if(cornerDetected){
     		cornerEstimate(pixels, pRect);
-    	else
+    		T12 = System.nanoTime();
+    	}
+    	else{
     		cornerDetectData(pixels, pRect);
-    	
+    		T13 = System.nanoTime();
+    	}
+    	long T14 = System.nanoTime();
     	if(!extractCode(pixels, bmpWidth, bmpHeight, pRect))
     		cornerDetected = false;
+    	long T15 = System.nanoTime();
+    	long corner_T = T12 -T11;
+    	long corner_T1 = T13 -T11;
+    	long corner_T2 = T15 -T14;
+	    Log.e("CornerE",Long.toString(corner_T));
+	    Log.e("CornerD",Long.toString(corner_T1));
+	    Log.e("ExtractC",Long.toString(corner_T2));
    
     	return true;
     }

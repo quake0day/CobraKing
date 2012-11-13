@@ -58,7 +58,7 @@ public class CanvasTx extends Activity
 	private int CODE_SIZE = 10;
 	
 	// Define single block that you wanna transmit
-	byte[] Single_block = {(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15 };
+	byte[] Single_block = {(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15,(byte) 0x15};
 	byte[] Single_block_1 = {(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10,(byte) 0x10 };
 	byte[] Single_block_2 = {(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11,(byte) 0x11 };
 
@@ -906,7 +906,9 @@ public class CanvasTx extends Activity
             //toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK);
             //vibrator.vibrate(1000);
                         
-            
+			
+			//long encodeT = T2 - T1;
+			//Log.e("ENCODE",Long.toString(encodeT));
     		// TODO Auto-generated method stub
     		_thread.setRunning(true);
     		_thread.start();
@@ -1229,7 +1231,8 @@ public class CanvasTx extends Activity
     		    			}	    				
 		    			 		    			  		    			
     		    		}
-    		    	}  		    	
+    		    	}  		
+
     		    	
     		    	if(isShowBmps)
     		    	{
@@ -1242,6 +1245,7 @@ public class CanvasTx extends Activity
         		            synchronized (_surfaceHolder) {
         		                _surView.onDraw(c);
         		            }
+
         		        } 
         		        finally 
         		        {
@@ -1253,7 +1257,7 @@ public class CanvasTx extends Activity
         		                _surfaceHolder.unlockCanvasAndPost(c);
         		            }
         		        }
-        		        
+
         		        //---------------sleep until next send--------------------
         		        try {
         					sleep(defaultSleep,0); //15fps
@@ -1375,7 +1379,7 @@ public class CanvasTx extends Activity
     					Log.e("data",k+"");
     					*/
     					
-
+    					long T1 = System.nanoTime();
     	          		  String a = null;
     	          		  try {
 							a = readFile("k.txt");
@@ -1385,7 +1389,7 @@ public class CanvasTx extends Activity
 						}
     	          		  Log.e("data1",a);
     	          		  if(Integer.parseInt(a) % 3 == 0){
-    	          			System.arraycopy(Single_block,0,mBufArray,0,CODE_SIZE);
+    	          			System.arraycopy(Single_block,0,mBufArray,0,199);
     	          		  }
     	          		  else if(Integer.parseInt(a) % 3 == 1){
     	          			System.arraycopy(Single_block_1,0,mBufArray,0,CODE_SIZE);
@@ -1533,7 +1537,7 @@ public class CanvasTx extends Activity
     							mCodeArray[pos] = 1;
     							pos++;
     						}
-    						
+
     						
     						//*******************************************************
     						//---------------Choose Coding Scheme (24)---------------
@@ -1705,7 +1709,9 @@ public class CanvasTx extends Activity
     							
     						}//END DIF Stride
     						
-    						
+    						long T2 = System.nanoTime();
+    						long encodeT = T2 - T1;
+    						Log.e("ENCODE",Long.toString(encodeT));
     											
     						//*******************************************************
     						//---------------Log frame encoding into txt-----------
@@ -1803,10 +1809,14 @@ public class CanvasTx extends Activity
     		        c = null;
     		        try 
     		        {
+    		        	long T4 = System.nanoTime();
     		            c = _surfaceHolder.lockCanvas(null);
     		            synchronized (_surfaceHolder) {
     		                _surView.onDraw(c);
     		            }
+        		        long T5 = System.nanoTime();
+        		        long drawTime = T5-T4;
+        		        Log.e("DRAW",Long.toString(drawTime));
     		        } 
     		        finally 
     		        {

@@ -38,6 +38,7 @@ import android.widget.ImageView;
 @SuppressLint("NewApi")
 public class MainActivity extends Activity implements SurfaceHolder.Callback,OnClickListener{
 	public static int k = 9;
+	public static int count = 0;
 
 	
     /* 【SurfaceHolder.Callback 回调函数】 */
@@ -213,8 +214,22 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
             // TODO Auto-generated method stub
 
             try {
-                Log.i(TAG, "going into onPreviewFrame");
+            	Log.i(TAG, "going into onPreviewFrame");
+                if(count == 0){
+                	long startTime = System.nanoTime();
+                	count ++;
+                	Log.i(TAG, "StartTime:"+startTime);
+                }
+                else if (count == 100){
+                	long endTime = System.nanoTime();
+                	count ++;
+                	Log.i(TAG, "EndTime:"+endTime);
+                }
+                else{
+                	count++;
+                }
                 
+                /*
                 // get data length
                 int width = mPreviewWidth;
                 int height = mPreviewHeight;
@@ -268,6 +283,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
               		  a = readFile("k.txt");
               		  Log.e("data1",a);
                	  }
+               	  
 
                	  //pro = (Process) getApplication(); //获得自定义的应用程序MyApp 
                	 // Log.i("GETserial",pro.getSerial());

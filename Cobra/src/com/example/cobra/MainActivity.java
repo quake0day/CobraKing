@@ -213,6 +213,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
             // TODO Auto-generated method stub
 
             try {
+            	long T6 = System.nanoTime();
                 Log.i(TAG, "going into onPreviewFrame");
                 
                 // get data length
@@ -250,13 +251,22 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
 
 
           		  
-
+          		  //k ++;
+          		  writeFile("k.txt",k+"");
+          		  String a;
+          		  a = readFile("k.txt");
+          		  Log.e("data1",a);
           		  
 
         		  //sendBroadcast(intent); 
-        		  
+          		long T8 = System.nanoTime();
                	  process_Succ = process.processRealTime();
-               	 // process_Succ = process.processImage(287);
+               	  //process_Succ = process.processImage(287);
+               	long T7 = System.nanoTime();
+		        long drawTime = T7-T6;
+		        long decodeTime = T7 -T8;
+		        Log.e("Decode",Long.toString(drawTime));
+		        Log.e("Decode2",Long.toString(decodeTime));
                	  Log.e("succ",process_Succ+" ");
                	  if(process_Succ == true){
               		  Intent intent = new Intent("com.example.cobra.canvastx");
@@ -264,7 +274,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
               		  startActivity(intent);
               		  k ++;
               		  writeFile("k.txt",k+"");
-              		  String a;
+              		  //String a;
               		  a = readFile("k.txt");
               		  Log.e("data1",a);
                	  }
@@ -369,6 +379,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback,OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
+    	//setTheme(R.style.AppTheme); 
         super.onCreate(savedInstanceState);
         // FULL SCREEN
         requestWindowFeature(Window.FEATURE_NO_TITLE);
